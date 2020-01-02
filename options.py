@@ -1,0 +1,2 @@
+GRID_COLOUR = "cyan"
+SHOW_COORDS = False
