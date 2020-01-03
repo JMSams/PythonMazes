@@ -1,5 +1,3 @@
-import sys
-
 import colorama
 colorama.init()
 
@@ -15,21 +13,16 @@ clear()
 
 from random import randint
 
-if (len(sys.argv) > 1):
-	if (sys.argv[1] == 'BinaryTree'):
-		from BinaryTree import BinaryTree as Algorithm
-	#elif (sys.argv[1] == 'RecursiveBacktracker'):
-		#import RecursiveBacktracker.RecursiveBacktracker as Algorithm
-	else:
-		from BinaryTree import BinaryTree as Algorithm
-else:
+from options import *
+
+if ALGORITHM == 0:
+	ALGORITHM = randint(1, 2)
+if ALGORITHM == 1:
 	from BinaryTree import BinaryTree as Algorithm
+elif ALGORITHM == 2:
+	from RecursiveBacktracker import RecursiveBacktracker as Algorithm
 
 themaze = Algorithm(randint(3, 12), randint(3, 12))
 print("rows: " + str(themaze.rows))
 print("cols: " + str(themaze.columns))
 print(themaze)
-exit()
-for row in range(themaze.rows):
-	for col in range(themaze.columns):
-		print("({},{}): [{}]".format(col, row,  ", ".join(map(str, themaze.data[row][col].links))))
