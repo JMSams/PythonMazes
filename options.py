@@ -8,4 +8,4 @@ GRID_SIZE_Y = 17
 # 0: random
 # 1: binary tree
 # 2: recursive backtracker
-ALGORITHM = 2
+ALGORITHM = 0
