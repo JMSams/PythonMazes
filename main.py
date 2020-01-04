@@ -16,7 +16,7 @@ from random import randint
 from options import *
 
 if ALGORITHM == 0 or ALGORITHM < 0 or ALGORITHM > ALGORITHM_COUNT:
-	ALGORITHM = randint(1, 2)
+	ALGORITHM = randint(1, ALGORITHM_COUNT)
 if ALGORITHM == 1:
 	from BinaryTree import BinaryTree as Algorithm
 	AlgorithmName = "Binary Tree"
