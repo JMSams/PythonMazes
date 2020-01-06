@@ -26,6 +26,9 @@ elif ALGORITHM == 2:
 elif ALGORITHM == 3:
 	from Sidewinder import Sidewinder as Algorithm
 	AlgorithmName = "Sidewinder"
+elif ALGORITHM == 4:
+	from Kruskal import Kruskal as Algorithm
+	AlgorithmName = "Kruskal"
 
 rows = GRID_SIZE_Y if isinstance(GRID_SIZE_Y, int) else randint(GRID_SIZE_Y[0], GRID_SIZE_Y[1])
 cols = GRID_SIZE_X if isinstance(GRID_SIZE_X, int) else randint(GRID_SIZE_X[0], GRID_SIZE_X[1])
