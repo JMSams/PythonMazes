@@ -2,6 +2,8 @@ class Cell:
 	row = None
 	column = None
 	
+	content = " "
+	
 	north = None
 	east = None
 	south = None

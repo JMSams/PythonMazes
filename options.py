@@ -1,8 +1,8 @@
 GRID_COLOUR = "cyan"
 SHOW_COORDS = False
 
-GRID_SIZE_X = 13
-GRID_SIZE_Y = 13
+GRID_SIZE_X = 8
+GRID_SIZE_Y = 7
 
 # Algorithms:
 # 0: random

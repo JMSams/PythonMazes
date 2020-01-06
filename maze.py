@@ -40,7 +40,7 @@ class Maze:
 		for row in range(self.rows-1, -1, -1):
 			rv += colored("|", GRID_COLOUR)
 			for col in range(self.columns):
-				rv += (str(col) + "," + str(row)) if SHOW_COORDS else "   "
+				rv += (str(col) + "," + str(row)) if SHOW_COORDS else (" " + self.data[row][col].content + " ")
 				if col == self.columns-1:
 					rv += colored("|", GRID_COLOUR)
 				else:
