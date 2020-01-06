@@ -8,6 +8,22 @@ class Maze:
 	
 	data = []
 	
+	def orphans(self):
+		rv = []
+		for row in range(rows):
+			for col in range(cols):
+				if len(self.data[row][col].links) == 0:
+					rv.append(self.data[row][col])
+		return rv
+	
+	def deadends(self):
+		rv = []
+		for row in range(rows):
+			for col in range(cols):
+				if len(self.data[row][col].links) == 1:
+					rv.append(self.data[row][col])
+		return rv
+	
 	def __init__(self, rows, columns):
 		self.columns = columns
 		self.rows = rows
