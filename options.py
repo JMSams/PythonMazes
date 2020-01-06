@@ -1,8 +1,8 @@
 GRID_COLOUR = "cyan"
 SHOW_COORDS = False
 
-GRID_SIZE_X = 8
-GRID_SIZE_Y = 7
+GRID_SIZE_X = 15
+GRID_SIZE_Y = 15
 
 # Algorithms:
 # 0: random
@@ -10,5 +10,5 @@ GRID_SIZE_Y = 7
 # 2: recursive backtracker
 # 3: sidewinder
 # 4: kruskal
-ALGORITHM = 4
+ALGORITHM = 0
 ALGORITHM_COUNT = 4
