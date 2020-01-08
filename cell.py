@@ -1,18 +1,17 @@
 class Cell:
 	row = None
-	column = None
-	
-	content = " "
+	col = None
 	
 	north = None
 	east = None
 	south = None
 	west = None
-	links = []
 	
-	def __init__(self, row, col):
+	links = None
+	
+	def __init__(self, col, row):
+		self.col = col
 		self.row = row
-		self.column = col
 		self.links = []
 	
 	def Link(self, other, bidi=True):
@@ -21,12 +20,11 @@ class Cell:
 			if bidi:
 				other.Link(self, False)
 	
-	def __str__(self):
-		return "({},{})".format(self.column, self.row)
+	def Unlink(self, other, bidi=True):
+		if isinstance(other, Cell):
+			self.links.remove(other)
+			if bidi:
+				other.Unlink(self, False)
 	
-	def __eq__(self, other):
-		if not isinstance(other, Cell):
-			return False
-		return (self.row == other.row) and (self.column == other.column)
-	def __ne__(self, other):
-		return not self.__eq__(other)
+	def IsLinked(self, other):
+		return (other in self.links)

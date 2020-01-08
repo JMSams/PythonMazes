@@ -1,23 +1,17 @@
 from random import randint
-from maze import Maze
+from grid import Grid
+from cell import Cell
 
-def BinaryTree(rows, cols):
-	maze = Maze(rows, cols)
-	
-	for row in range(rows):
-		for col in range(cols):
-			if col == cols-1:
-				if row == rows-1:
-					# North east corner, no link
-					pass
-				else:
-					# East edge, link north
-					maze.data[row][col].Link(maze.data[row][col].north)
-			elif row == rows-1:
-				# North edge, link east
-				maze.data[row][col].Link(maze.data[row][col].east)
-			else:
-				# Rest of maze, link randomly
-				maze.data[row][col].Link(maze.data[row][col].east if randint(0,1) == 1 else maze.data[row][col].north)
-	
-	return maze
+def Mazify(grid):
+	for row in range(grid.rowCount):
+		for col in range(grid.colCount):
+			neighbours = []
+			if grid[col, row].north != None:
+				neighbours.append(grid[col, row].north)
+			if grid[col, row].east != None:
+				neighbours.append(grid[col, row].east)
+			
+			if len(neighbours) == 0:
+				continue
+			
+			grid[col, row].Link(neighbours[randint(0, len(neighbours)-1)])

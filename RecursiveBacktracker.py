@@ -1,33 +1,30 @@
 from random import randint
-from maze import Maze
+from grid import Grid
 from cell import Cell
 
-def RecursiveBacktracker(rows, cols):
-	maze = Maze(rows, cols)
+def Mazify(grid):
 	visited = []
 	
-	startX = randint(0, cols-1)
-	startY = randint(0, rows-1)
+	startX = randint(0, grid.colCount-1)
+	startY = randint(0, grid.rowCount-1)
 	
-	BacktrackRecursively(maze, visited, startY, startX)
-	
-	return maze
+	BacktrackRecursively(grid, visited, startX, startY)
 
-def BacktrackRecursively(maze, visited, row, col):
-	visited.append(maze.data[row][col])
+def BacktrackRecursively(grid, visited, col, row):
+	visited.append(grid[col, row])
 	
 	candidates = []
-	if isinstance(maze.data[row][col].north, Cell) and maze.data[row][col].north not in visited:
-		candidates.append(maze.data[row][col].north)
-	if isinstance(maze.data[row][col].east, Cell) and maze.data[row][col].east not in visited:
-		candidates.append(maze.data[row][col].east)
-	if isinstance(maze.data[row][col].south, Cell) and maze.data[row][col].south not in visited:
-		candidates.append(maze.data[row][col].south)
-	if isinstance(maze.data[row][col].west, Cell) and maze.data[row][col].west not in visited:
-		candidates.append(maze.data[row][col].west)
+	if isinstance(grid[col, row].north, Cell) and grid[col, row].north not in visited:
+		candidates.append(grid[col, row].north)
+	if isinstance(grid[col, row].east, Cell) and grid[col, row].east not in visited:
+		candidates.append(grid[col, row].east)
+	if isinstance(grid[col, row].south, Cell) and grid[col, row].south not in visited:
+		candidates.append(grid[col, row].south)
+	if isinstance(grid[col, row].west, Cell) and grid[col, row].west not in visited:
+		candidates.append(grid[col, row].west)
 	
 	while len(candidates) > 0:
 		candidate = candidates.pop(randint(0, len(candidates)-1))
 		if candidate not in visited:
-			maze.data[row][col].Link(candidate)
-			BacktrackRecursively(maze, visited, candidate.row, candidate.column)
+			grid[col, row].Link(candidate)
+			BacktrackRecursively(grid, visited, candidate.col, candidate.row)

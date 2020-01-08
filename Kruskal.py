@@ -1,26 +1,24 @@
 from random import randint
-from maze import Maze
+from grid import Grid
 from cell import Cell
 from clear import clear
 from time import sleep
 
-def Kruskal(rows, cols):
-	maze = Maze(rows, cols)
-	
+def Mazify(grid):
 	pairs = []
 	sets = []
-	for row in range(rows):
-		for col in range(cols):
-			set = Set(Base62(len(sets)), [maze.data[row][col]])
+	for row in range(grid.rowCount):
+		for col in range(grid.colCount):
+			set = Set(Base62(len(sets)), [grid[col, row]])
 			sets.append(set)
 			
-			maze.data[row][col].set = set
-			maze.data[row][col].content = set.id
+			grid[col, row].set = set
+			grid[col, row].content = set.id
 			
-			if maze.data[row][col].east != None:
-				pairs.append((maze.data[row][col], maze.data[row][col].east))
-			if maze.data[row][col].north != None:
-				pairs.append((maze.data[row][col], maze.data[row][col].north))
+			if grid[col, row].east != None:
+				pairs.append((grid[col, row], grid[col, row].east))
+			if grid[col, row].north != None:
+				pairs.append((grid[col, row], grid[col, row].north))
 	
 	while len(sets) > 1:
 		pair = pairs.pop(randint(0, len(pairs)-1))
@@ -37,11 +35,9 @@ def Kruskal(rows, cols):
 			pair[1].set.Combine(other)
 			sets.remove(other)
 	
-	for row in range(rows):
-		for col in range(cols):
-			maze.data[row][col].content = " "
-	
-	return maze
+	for row in range(grid.rowCount):
+		for col in range(grid.colCount):
+			grid[col, row].content = " "
 
 class Set(list):
 	id = ""

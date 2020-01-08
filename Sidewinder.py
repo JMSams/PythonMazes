@@ -1,28 +1,24 @@
 from random import randint
-from maze import Maze
+from grid import Grid
 
-def Sidewinder(rows, cols):
-	maze = Maze(rows, cols)
-	
+def Mazify(grid):
 	set = []
 	
-	for row in range(rows):
-		for col in range(cols):
-			if row == rows-1 and col == cols-1:
+	for row in range(grid.rowCount):
+		for col in range(grid.colCount):
+			if row == grid.rowCount-1 and col == grid.colCount-1:
 				continue
 			
-			set.append(maze.data[row][col])
+			set.append(grid[col, row])
 			c = randint(0, 1)
-			if col == cols-1:
+			if col == grid.colCount-1:
 				c = 1
-			elif row == rows-1:
+			elif row == grid.rowCount-1:
 				c = 0
 			
 			if c == 0:
-				maze.data[row][col].Link(maze.data[row][col].east)
+				grid[col, row].Link(grid[col, row].east)
 			else:
 				i = randint(0, len(set)-1)
 				set[i].Link(set[i].north)
 				set = []
-	
-	return maze
