@@ -6,7 +6,8 @@ def printhelp():
 	print("\t\t2 - Sidewinder")
 	print("\t\t3 - Recursive Backtracker")
 	print("\t\t4 - Kruskal")
-ALGORITHM_COUNT = 4
+	print("\t\t5 - Prims")
+ALGORITHM_COUNT = 5
 
 colCount = 7
 rowCount = 7
@@ -49,6 +50,8 @@ elif algorithm == 3:
 	from RecursiveBacktracker import Mazify
 elif algorithm == 4:
 	from Kruskal import Mazify
+elif algorithm == 5:
+	from Prims import Mazify
 
 grid = Grid(colCount, rowCount)
 Mazify(grid)

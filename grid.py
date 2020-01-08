@@ -60,7 +60,7 @@ class Grid:
 		return rv
 	
 	def randomCell(self):
-		return self[randint(0, colCount-1), randint(0, rowCount-1)]
+		return self[randint(0, self.colCount-1), randint(0, self.rowCount-1)]
 	
 	def __str__(self):
 		rv = ""
@@ -86,3 +86,6 @@ class Grid:
 			rv += "\n"
 		
 		return rv
+	
+	def Draw(self):
+		pass
