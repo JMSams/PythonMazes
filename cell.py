@@ -27,4 +27,10 @@ class Cell:
 				other.Unlink(self, False)
 	
 	def IsLinked(self, other):
-		return (other in self.links)
+		if isinstance(other, list):
+			rv = True
+			for o in other:
+				rv = rv and self.IsLinked(o)
+			return rv
+		elif isinstance(other, Cell):
+			return (other in self.links)
