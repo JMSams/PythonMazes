@@ -1,6 +1,7 @@
 from random import randint
 from grid import Grid
 from cell import Cell
+from sys import setrecursionlimit
 
 def Mazify(grid):
 	visited = []
@@ -8,6 +9,7 @@ def Mazify(grid):
 	startX = randint(0, grid.colCount-1)
 	startY = randint(0, grid.rowCount-1)
 	
+	setrecursionlimit(1500)
 	BacktrackRecursively(grid, visited, startX, startY)
 
 def BacktrackRecursively(grid, visited, col, row):

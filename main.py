@@ -7,11 +7,16 @@ def printhelp():
 	print("\t\t3 - Recursive Backtracker")
 	print("\t\t4 - Kruskal")
 	print("\t\t5 - Prims")
+	print("\t-t --terminal")
+	print("\t\tIf set, maze will be printed to stdout")
+	exit()
 ALGORITHM_COUNT = 5
 
 colCount = 7
 rowCount = 7
 algorithm = 0
+printmaze = False
+outname = "output"
 
 from sys import argv
 for arg in argv:
@@ -20,45 +25,82 @@ for arg in argv:
 			algorithm = int(arg[3:])
 		except ValueError as e:
 			printhelp()
-			exit()
 	elif arg.startswith("-c:"):
 		try:
 			colCount = int(arg[3:])
 		except ValueError as e:
 			printhelp()
-			exit()
 	elif arg.startswith("-r:"):
 		try:
 			rowCount = int(arg[3:])
 		except ValueError as e:
 			printhelp()
-			exit()
+	elif arg == "-h":
+		printhelp()
+	elif arg == "-t":
+		printmaze = True
+	elif arg.startswith("-o:"):
+		outname = arg[3:]
 
 from clear import clear
 clear()
 
 from random import randint
+from threading import Thread
+from datetime import datetime
+from time import sleep
+from Image import OutputImage
 from grid import Grid
+
+def Animate(s, t=None):
+	if t == None:
+		i = 0
+		while runt:
+			print("\033[F\033[K{}{}".format(s, ((i%3)+1)*'.'))
+			i+=1
+			sleep(0.1)
+	else:
+		i = 0
+		while t==None or t.isAlive():
+			print("\033[F\033[K{}{}".format(s, ((i%3)+1)*'.'))
+			i+=1
+			sleep(0.1)
 
 if algorithm == 0:
 	algorithm = randint(1, ALGORITHM_COUNT)
 if algorithm == 1:
 	from BinaryTree import Mazify
+	algorithm = "Binary Tree"
 elif algorithm == 2:
 	from Sidewinder import Mazify
+	algorithm = "Sidewinder"
 elif algorithm == 3:
 	from RecursiveBacktracker import Mazify
+	algorithm = "Recursive Backtracker"
 elif algorithm == 4:
 	from Kruskal import Mazify
+	algorithm = "Kruskal"
 elif algorithm == 5:
 	from Prims import Mazify
+	algorithm = "Prims"
 
+gridtime = datetime.now()
 grid = Grid(colCount, rowCount)
+runt = True
+t = Thread(target=Animate, args=("Generating maze with "+algorithm,))
+t.daemon = True
+t.start()
 Mazify(grid)
-#print(grid)
+runt = False
+if printmaze:
+	print(grid)
+print("Maze generated in {0:.2f} seconds".format((datetime.now()-gridtime).total_seconds()))
+print()
 
-#TODO: Use threading to show an animation in the terminal while generating image
-#TODO: Display the time taken for generating the maze and generating the image
+imagetime = datetime.now()
+t = Thread(target=OutputImage, args=(grid, outname))
+t.daemon = True
+t.start()
+Animate("Generating image", t)
 
-from Image import OutputImage
-OutputImage(grid)
+print("Image generated in {0:.2f} seconds, saved as  {1}.png".format((datetime.now()-imagetime).total_seconds(), outname))

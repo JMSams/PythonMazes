@@ -2,7 +2,7 @@ from PIL import Image
 from grid import Grid
 from Sprites import *
 
-def OutputImage(grid):
+def OutputImage(grid, outname = "output"):
 	cell_size = 16
 	image_width = grid.colCount * cell_size
 	image_height = grid.rowCount * cell_size
@@ -18,8 +18,7 @@ def OutputImage(grid):
 			sprite = SelectSprite(grid[col, row])
 			image.paste(sprite, offset)
 	
-	image.save('output.png')
-	print('Saved maze to output.png')
+	image.save(outname + ".png")
 
 def SelectSprite(cell):
 	if cell.IsLinked([cell.north, cell.east, cell.south, cell.west]):
