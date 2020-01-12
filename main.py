@@ -55,7 +55,9 @@ elif algorithm == 5:
 
 grid = Grid(colCount, rowCount)
 Mazify(grid)
-print(grid)
+#print(grid)
+
+#TODO: Use threading to show an animation in the terminal while generating image
 
 from Image import OutputImage
 OutputImage(grid)
