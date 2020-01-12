@@ -58,6 +58,7 @@ Mazify(grid)
 #print(grid)
 
 #TODO: Use threading to show an animation in the terminal while generating image
+#TODO: Display the time taken for generating the maze and generating the image
 
 from Image import OutputImage
 OutputImage(grid)
