@@ -55,7 +55,7 @@ elif algorithm == 5:
 
 grid = Grid(colCount, rowCount)
 Mazify(grid)
-#print(grid)
+print(grid)
 
 from Image import OutputImage
 OutputImage(grid)
