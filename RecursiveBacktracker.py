@@ -9,7 +9,7 @@ def Mazify(grid):
 	startX = randint(0, grid.colCount-1)
 	startY = randint(0, grid.rowCount-1)
 	
-	setrecursionlimit(1500)
+	setrecursionlimit(5000)
 	BacktrackRecursively(grid, visited, startX, startY)
 
 def BacktrackRecursively(grid, visited, col, row):
