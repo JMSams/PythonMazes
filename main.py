@@ -49,7 +49,6 @@ from random import randint
 from threading import Thread
 from datetime import datetime
 from time import sleep
-from Image import OutputImage
 from grid import Grid
 
 def Animate(s, t=None):
@@ -61,7 +60,7 @@ def Animate(s, t=None):
 			sleep(0.1)
 	else:
 		i = 0
-		while t==None or t.isAlive():
+		while t==None or t.is_alive():
 			print("\033[F\033[K{}{}".format(s, ((i%3)+1)*'.'))
 			i+=1
 			sleep(0.1)
@@ -98,7 +97,7 @@ print("Maze generated in {0:.2f} seconds".format((datetime.now()-gridtime).total
 print()
 
 imagetime = datetime.now()
-t = Thread(target=OutputImage, args=(grid, outname))
+t = Thread(target=grid.Draw, args=(outname,))
 t.daemon = True
 t.start()
 Animate("Generating image", t)

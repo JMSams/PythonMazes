@@ -15,6 +15,18 @@ class Grid:
 		self.PrepareGrid()
 		self.ConfigureGrid()
 	
+	def eachCell(self):
+		for col in range(self.colCount):
+			for row in range(self.rowCount):
+				yield self[col, row]
+	
+	def eachRow(self):
+		for row in range(self.rowCount):
+			rv = []
+			for col in range(self.colCount):
+				rv.append(self[col, row])
+			yield rv
+	
 	def PrepareGrid(self):
 		for col in range(self.colCount):
 			newCol = []
@@ -23,12 +35,11 @@ class Grid:
 			self.grid.append(newCol)
 	
 	def ConfigureGrid(self):
-		for row in range(self.rowCount):
-			for col in range(self.colCount):
-				self[col, row].north = self[col, row+1]
-				self[col, row].south = self[col, row-1]
-				self[col, row].east = self[col+1, row]
-				self[col, row].west = self[col-1, row]
+		for cell in self.eachCell():
+			cell.north = self[cell.col, cell.row+1]
+			cell.south = self[cell.col, cell.row-1]
+			cell.east = self[cell.col+1, cell.row]
+			cell.west = self[cell.col-1, cell.row]
 	
 	def __getitem__(self, coord):
 		col,row = coord
@@ -45,18 +56,16 @@ class Grid:
 	
 	def orphans(self):
 		rv = []
-		for row in range(self.rowCount):
-			for col in range(self.colCount):
-				if len(self[col, row].links) == 0:
-					rv.append(self[col, row])
+		for cell in self.eachCell():
+			if len(cell.links) == 0:
+				rv.append(cell)
 		return rv
 	
 	def deadends(self):
 		rv = []
-		for row in range(self.rowCount):
-			for col in range(self.colCount):
-				if len(self[col, row].links) == 1:
-					rv.append(self[col, row])
+		for cell in self.eachCell():
+			if len(cell.links) == 1:
+				rv.append(cell)
 		return rv
 	
 	def randomCell(self):
@@ -87,5 +96,20 @@ class Grid:
 		
 		return rv
 	
-	def Draw(self):
-		pass
+	def Draw(self, outputName="output"):
+		from PIL import Image
+		import Sprites
+		
+		image_width = self.colCount * Sprites.CellSize
+		image_height = self.rowCount * Sprites.CellSize
+		
+		image = Image.new('RGBA', (image_width, image_height), 'black')
+		
+		for row in range(self.rowCount):
+			for col in range(self.colCount):
+				offset = ((col * Sprites.CellSize), (image_height - ((row+1) * Sprites.CellSize)))
+				
+				sprite = Sprites.SelectSprite(self[col, row])
+				image.paste(sprite, offset)
+		
+		image.save(outputName + ".png")
