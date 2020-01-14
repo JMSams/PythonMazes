@@ -1,6 +1,6 @@
 def printhelp():
 	print("Usage: python main.py -a:algorithm -c:colCount -r:rowCount")
-	print("\talgorithm:")
+	print("\t-a --algorithm")
 	print("\t\t0 - Random")
 	print("\t\t1 - Binary Tree")
 	print("\t\t2 - Sidewinder")
@@ -8,7 +8,9 @@ def printhelp():
 	print("\t\t4 - Kruskal")
 	print("\t\t5 - Prims")
 	print("\t-t --terminal")
-	print("\t\tIf set, maze will be printed to stdout")
+	print("\t\tIf set, maze will be printed to stdout.  Not compatible with the -c flag.")
+	print("\t-c --cube")
+	print("\t\tGenerates a cubic maze.")
 	exit()
 ALGORITHM_COUNT = 5
 
@@ -17,6 +19,12 @@ rowCount = 7
 algorithm = 0
 printmaze = False
 outname = "output"
+
+#Maze types:
+#1: 2D
+#2: Cube
+mazeType = 1
+mazeTypes = 2
 
 from sys import argv
 for arg in argv:
@@ -38,9 +46,19 @@ for arg in argv:
 	elif arg == "-h":
 		printhelp()
 	elif arg == "-t":
-		printmaze = True
+		if mazeType != 1:
+			printmaze = True
 	elif arg.startswith("-o:"):
 		outname = arg[3:]
+	elif arg.startswith("-c:"):
+		try:
+			mt = int(arg[3:])
+			if mt >= 1 and mt <= mazeTypes:
+				mazeType = mt
+			else:
+				printhelp()
+		except ValueError as e:
+			printhelp()
 
 from clear import clear
 clear()
