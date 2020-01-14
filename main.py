@@ -8,9 +8,10 @@ def printhelp():
 	print("\t\t4 - Kruskal")
 	print("\t\t5 - Prims")
 	print("\t-t --terminal")
-	print("\t\tIf set, maze will be printed to stdout.  Not compatible with the -c flag.")
-	print("\t-c --cube")
-	print("\t\tGenerates a cubic maze.")
+	print("\t\tIf set, maze will be printed to stdout")
+	print("\t-m --mazetype")
+	print("\t\t1: Generates a rectangular maze.")
+	print("\t\t2: Generates a cubic maze.")
 	exit()
 ALGORITHM_COUNT = 5
 
@@ -20,9 +21,6 @@ algorithm = 0
 printmaze = False
 outname = "output"
 
-#Maze types:
-#1: 2D
-#2: Cube
 mazeType = 1
 mazeTypes = 2
 
@@ -46,11 +44,11 @@ for arg in argv:
 	elif arg == "-h":
 		printhelp()
 	elif arg == "-t":
-		if mazeType != 1:
+		if mazeType != 2:
 			printmaze = True
 	elif arg.startswith("-o:"):
 		outname = arg[3:]
-	elif arg.startswith("-c:"):
+	elif arg.startswith("-m:"):
 		try:
 			mt = int(arg[3:])
 			if mt >= 1 and mt <= mazeTypes:
@@ -67,7 +65,6 @@ from random import randint
 from threading import Thread
 from datetime import datetime
 from time import sleep
-from grid import Grid
 
 def Animate(s, t=None):
 	if t == None:
@@ -100,6 +97,13 @@ elif algorithm == 4:
 elif algorithm == 5:
 	from Prims import Mazify
 	algorithm = "Prims"
+
+if mazeType == 1:
+	from grid import Grid
+elif mazeType == 2:
+	from cubeGrid import CubeGrid as Grid
+else:
+	printhelp()
 
 gridtime = datetime.now()
 grid = Grid(colCount, rowCount)

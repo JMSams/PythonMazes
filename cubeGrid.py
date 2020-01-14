@@ -71,11 +71,11 @@ class CubeGrid(Grid):
 			elif face == 5: return (3, n, n-col)
 		elif col < 0:
 			if face == 0:   return (3, row, n)
-            elif face == 1: return (0, row, n)
-            elif face == 2: return (1, row, n)
-            elif face == 3: return (2, row, n)
-            elif face == 4: return (0, 0, row)
-            elif face == 5: return (0, n, n-row)
+			elif face == 1: return (0, row, n)
+			elif face == 2: return (1, row, n)
+			elif face == 3: return (2, row, n)
+			elif face == 4: return (0, 0, row)
+			elif face == 5: return (0, n, n-row)
 		elif col >= d:
 			if face == 0:   return (1, row, 0)
             elif face == 1: return (2, row, 0)
