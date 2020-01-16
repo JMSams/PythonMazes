@@ -1,3 +1,4 @@
+from random import randint
 from grid import Grid
 from cubeCell import CubeCell
 
@@ -100,4 +101,38 @@ class CubeGrid(Grid):
 		from PIL import Image
 		import Sprites
 		
-		#TODO: Draw the net of the cube grid
+		facesize = self.cubeSize * Sprites.CellSize
+		
+		faceOffsets = [
+			(0, facesize),
+			(facesize, facesize),
+			(facesize*2, facesize),
+			(facesize*3, facesize),
+			(facesize, 0),
+			(facesize, facesize*2)
+		]
+		
+		image = Image.new('RGBA', (facesize*4, facesize*3), (0, 0, 0, 0))
+		
+		for face in range(6):
+			for row in range(self.cubeSize):
+				for col in range(self.cubeSize):
+					offset = ((col * Sprites.CellSize), (facesize - ((row+1) * Sprites.CellSize)))
+					offset = (offset[0] + faceOffsets[face][0], offset[1] + faceOffsets[face][1])
+					
+					sprite = Sprites.SelectSprite(self[face, col, row])
+					image.paste(sprite, offset)
+		
+		image.save(outputName+".png")
+		
+		#debug
+		with open(outputName+".debug.tex", "w") as f:
+			f.write("\\documentclass{article}\n\\usepackage{graphicx}\n\\usepackage{multicol}\n\\usepackage[margin=.55in]{geometry}\n\\begin{document}\n")
+			f.write("\\noindent\\includegraphics[width=\\linewidth]{{{}}}\n\n\\begin{{multicols*}}{{3}}\n\n".format(outputName))
+			for cell in self.eachCell():
+				f.write("Cell ({}, {}, {}):\\\\\n".format(cell.face, cell.col, cell.row))
+				f.write("\-\hspace{{2cm}}North: {}\\\\\n".format(cell.IsLinked(cell.north)))
+				f.write("\-\hspace{{2cm}}East: {}\\\\\n".format(cell.IsLinked(cell.east)))
+				f.write("\-\hspace{{2cm}}South: {}\\\\\n".format(cell.IsLinked(cell.south)))
+				f.write("\-\hspace{{2cm}}West: {}\n\n".format(cell.IsLinked(cell.west)))
+			f.write("\\end{multicols*}\n\\end{document}")

@@ -20,7 +20,7 @@ N	= Image.open(os.path.join(dirname, 'Sprites/sprite_11.png'), 'r')
 E	= Image.open(os.path.join(dirname, 'Sprites/sprite_12.png'), 'r')
 EW	= Image.open(os.path.join(dirname, 'Sprites/sprite_13.png'), 'r')
 W	= Image.open(os.path.join(dirname, 'Sprites/sprite_14.png'), 'r')
-_	= Image.open(os.path.join(dirname, 'Sprites/sprite_15.png'), 'r')
+D	= Image.open(os.path.join(dirname, 'Sprites/sprite_15.png'), 'r')
 
 def SelectSprite(cell):
 	if cell.IsLinked([cell.north, cell.east, cell.south, cell.west]):
@@ -54,4 +54,4 @@ def SelectSprite(cell):
 	elif cell.IsLinked([cell.west]):
 		return W
 	else:
-		return _
+		return D
