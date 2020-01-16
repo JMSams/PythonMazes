@@ -83,20 +83,19 @@ def Animate(s, t=None):
 if algorithm == 0:
 	algorithm = randint(1, ALGORITHM_COUNT)
 if algorithm == 1:
-	from BinaryTree import Mazify
-	algorithm = "Binary Tree"
+	from BinaryTree import BinaryTree as Algorithm
 elif algorithm == 2:
-	from Sidewinder import Mazify
-	algorithm = "Sidewinder"
+	from Sidewinder import Sidewinder as Algorithm
 elif algorithm == 3:
-	from RecursiveBacktracker import Mazify
-	algorithm = "Recursive Backtracker"
+	from RecursiveBacktracker import RecursiveBacktracker as Algorithm
 elif algorithm == 4:
-	from Kruskal import Mazify
-	algorithm = "Kruskal"
+	from Kruskal import Kruskal as Algorithm
 elif algorithm == 5:
-	from Prims import Mazify
-	algorithm = "Prims"
+	from Prims import Prims as Algorithm
+
+if mazeType not in Algorithm.supportedGrids:
+	print("Error: GridType {} not supported by Algorithm {}".format(mazeType, algorithm))
+	exit()
 
 grid = None
 if mazeType == 1:
@@ -111,10 +110,10 @@ else:
 gridtime = datetime.now()
 #grid = Grid(colCount, rowCount)
 runt = True
-t = Thread(target=Animate, args=("Generating maze with "+algorithm,))
+t = Thread(target=Animate, args=("Generating maze with "+Algorithm.name,))
 t.daemon = True
 t.start()
-Mazify(grid)
+Algorithm.On(grid)
 runt = False
 if printmaze:
 	print(grid)

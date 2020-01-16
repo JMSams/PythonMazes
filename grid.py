@@ -15,6 +15,9 @@ class Grid:
 		self.PrepareGrid()
 		self.ConfigureGrid()
 	
+	def cellCount(self):
+		return self.colCount * self.rowCount
+	
 	def eachCell(self):
 		for col in range(self.colCount):
 			for row in range(self.rowCount):

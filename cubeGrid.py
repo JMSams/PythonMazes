@@ -8,6 +8,9 @@ class CubeGrid(Grid):
 		self.cubeSize = cubeSize
 		super().__init__(cubeSize, cubeSize)
 	
+	def cellCount(self):
+		return self.colCount * self.rowCount * 6
+	
 	def eachCell(self):
 		for face in range(6):
 			for col in range(self.colCount):
