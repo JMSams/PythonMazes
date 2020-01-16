@@ -8,15 +8,14 @@ class BinaryTree:
 	
 	@staticmethod
 	def On(grid):
-		for row in range(grid.rowCount):
-			for col in range(grid.colCount):
-				neighbours = []
-				if grid[col, row].north != None:
-					neighbours.append(grid[col, row].north)
-				if grid[col, row].east != None:
-					neighbours.append(grid[col, row].east)
-				
-				if len(neighbours) == 0:
-					continue
-				
-				grid[col, row].Link(neighbours[randint(0, len(neighbours)-1)])
+		for cell in grid.eachCell():
+			neighbours = []
+			if cell.north != None:
+				neighbours.append(cell.north)
+			if cell.east != None:
+				neighbours.append(cell.east)
+			
+			if len(neighbours) == 0:
+				continue
+			
+			cell.Link(neighbours[randint(0, len(neighbours)-1)])

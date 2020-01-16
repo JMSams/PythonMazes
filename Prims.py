@@ -7,28 +7,26 @@ class Prims:
 	
 	@staticmethod
 	def On(grid):
-		visited = []
+		active = []
 		
-		visited.append(grid.randomCell())
+		active.append(grid.randomCell())
 		
-		while len(visited) < (grid.cellCount()):
-			neighbours = Prims.getNeighbours(visited)
-			pair = neighbours.pop(randint(0, len(neighbours)-1))
-			visited.append(pair[1])
-			pair[0].Link(pair[1])
-	
-	@staticmethod
-	def getNeighbours(visited):
-		rv = []
-		
-		for cell in visited:
-			if cell.north != None and cell.north not in visited:
-				rv.append((cell, cell.north))
-			if cell.east != None and cell.east not in visited:
-				rv.append((cell, cell.east))
-			if cell.south != None and cell.south not in visited:
-				rv.append((cell, cell.south))
-			if cell.west != None and cell.west not in visited:
-				rv.append((cell, cell.west))
-		
-		return rv
+		while len(active) > 0:
+			cell = active[randint(0, len(active)-1)]
+			
+			available = []
+			if cell.north != None and len(cell.north.links) == 0:
+				available.append(cell.north)
+			if cell.east != None and len(cell.east.links) == 0:
+				available.append(cell.east)
+			if cell.south != None and len(cell.south.links) == 0:
+				available.append(cell.south)
+			if cell.west != None and len(cell.west.links) == 0:
+				available.append(cell.west)
+			
+			if len(available) > 0:
+				i = randint(0, len(available)-1)
+				cell.Link(available[i])
+				active.append(available[i])
+			else:
+				active.remove(cell)

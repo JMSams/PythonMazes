@@ -10,55 +10,25 @@ class RecursiveBacktracker:
 	
 	@staticmethod
 	def On(grid):
-		setrecursionlimit(5000)
-		
-		visited = []
-		
-		startX = randint(0, grid.colCount-1)
-		startY = randint(0, grid.rowCount-1)
-		
-		if isinstance(grid, CubeGrid):
-			startF = randint(0, 5)
-			RecursiveBacktracker.BacktrackRecursivelyCubed(grid, visited, startF, startX, startY)
-		else:
-			RecursiveBacktracker.BacktrackRecursively(grid, visited, startX, startY)
+		setrecursionlimit(8000)
+		RecursiveBacktracker.BacktrackRecursively(grid, [], grid.randomCell())
 	
 	@staticmethod
-	def BacktrackRecursively(grid, visited, col, row):
-		visited.append(grid[col, row])
+	def BacktrackRecursively(grid, visited, cell):
+		visited.append(cell)
 		
 		candidates = []
-		if (grid[col, row].north != None) and grid[col, row].north not in visited:
-			candidates.append(grid[col, row].north)
-		if (grid[col, row].east != None) and grid[col, row].east not in visited:
-			candidates.append(grid[col, row].east)
-		if (grid[col, row].south != None) and grid[col, row].south not in visited:
-			candidates.append(grid[col, row].south)
-		if (grid[col, row].west != None) and grid[col, row].west not in visited:
-			candidates.append(grid[col, row].west)
+		if (cell.north != None) and cell.north not in visited:
+			candidates.append(cell.north)
+		if (cell.east != None) and cell.east not in visited:
+			candidates.append(cell.east)
+		if (cell.south != None) and cell.south not in visited:
+			candidates.append(cell.south)
+		if (cell.west != None) and cell.west not in visited:
+			candidates.append(cell.west)
 		
 		while len(candidates) > 0:
 			candidate = candidates.pop(randint(0, len(candidates)-1))
 			if candidate not in visited:
-				grid[col, row].Link(candidate)
-				RecursiveBacktracker.BacktrackRecursively(grid, visited, candidate.col, candidate.row)
-	
-	@staticmethod
-	def BacktrackRecursivelyCubed(grid, visited, face, col, row):
-		visited.append(grid[face, col, row])
-		
-		candidates = []
-		if (grid[face, col, row].north != None) and grid[face, col, row].north not in visited:
-			candidates.append(grid[face, col, row].north)
-		if (grid[face, col, row].east != None) and grid[face, col, row].east not in visited:
-			candidates.append(grid[face, col, row].east)
-		if (grid[face, col, row].south != None) and grid[face, col, row].south not in visited:
-			candidates.append(grid[face, col, row].south)
-		if (grid[face, col, row].west != None) and grid[face, col, row].west not in visited:
-			candidates.append(grid[face, col, row].west)
-		
-		while len(candidates) > 0:
-			candidate = candidates.pop(randint(0, len(candidates)-1))
-			if candidate not in visited:
-				grid[face, col, row].Link(candidate)
-				RecursiveBacktracker.BacktrackRecursivelyCubed(grid, visited, candidate.face, candidate.col, candidate.row)
+				cell.Link(candidate)
+				RecursiveBacktracker.BacktrackRecursively(grid, visited, candidate)
