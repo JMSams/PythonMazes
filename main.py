@@ -98,15 +98,18 @@ elif algorithm == 5:
 	from Prims import Mazify
 	algorithm = "Prims"
 
+grid = None
 if mazeType == 1:
 	from grid import Grid
+	grid = Grid(colCount, rowCount)
 elif mazeType == 2:
 	from cubeGrid import CubeGrid as Grid
+	grid = Grid(colCount)
 else:
 	printhelp()
 
 gridtime = datetime.now()
-grid = Grid(colCount, rowCount)
+#grid = Grid(colCount, rowCount)
 runt = True
 t = Thread(target=Animate, args=("Generating maze with "+algorithm,))
 t.daemon = True
