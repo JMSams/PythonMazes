@@ -126,6 +126,7 @@ class CubeGrid(Grid):
 		image.save(outputName+".png")
 		
 		#debug
+		import os
 		with open(outputName+".debug.tex", "w") as f:
 			f.write("\\documentclass{article}\n\\usepackage{graphicx}\n\\usepackage{multicol}\n\\usepackage[margin=.55in]{geometry}\n\\begin{document}\n")
 			f.write("\\noindent\\includegraphics[width=\\linewidth]{{{}}}\n\n\\begin{{multicols*}}{{3}}\n\n".format(outputName))
@@ -136,3 +137,6 @@ class CubeGrid(Grid):
 				f.write("\-\hspace{{2cm}}South: {}\\\\\n".format(cell.IsLinked(cell.south)))
 				f.write("\-\hspace{{2cm}}West: {}\n\n".format(cell.IsLinked(cell.west)))
 			f.write("\\end{multicols*}\n\\end{document}")
+		os.system("pdflatex -aux-directory=temp {}.debug.tex".format(outputName))
+		os.system("del {}.debug.tex".format(outputName))
+		os.system("rmdir /s /q temp")
