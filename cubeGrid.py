@@ -60,33 +60,33 @@ class CubeGrid(Grid):
 		d = self.cubeSize
 		
 		if row < 0:
-			if face == 0:   return (4, col, 0)
-			elif face == 1: return (4, n, col)
-			elif face == 2: return (4, n-col, n)
-			elif face == 3: return (4, 0, n-col)
-			elif face == 4: return (3, 0, n-col)
-			elif face == 5: return (1, n, col)
+			if face == 0:   return (5, 0, col)
+			elif face == 1: return (5, col, n)
+			elif face == 2: return (5, n, col)
+			elif face == 3: return (5, n-col, 0)
+			elif face == 4: return (1, col, n)
+			elif face == 5: return (3, n-col, 0)
 		elif row >= d:
-			if face == 0:   return (5, n-col, 0)
-			elif face == 1: return (5, 0, col)
-			elif face == 2: return (5, col, n)
-			elif face == 3: return (5, n, n-col)
-			elif face == 4: return (1, 0, col)
-			elif face == 5: return (3, n, n-col)
+			if face == 0:   return (4, 0, n-col)
+			elif face == 1: return (4, col, 0)
+			elif face == 2: return (4, n, col)
+			elif face == 3: return (4, n-col, n)
+			elif face == 4: return (3, n-col, n)
+			elif face == 5: return (1, col, 0)
 		elif col < 0:
-			if face == 0:   return (3, row, n)
-			elif face == 1: return (0, row, n)
-			elif face == 2: return (1, row, n)
-			elif face == 3: return (2, row, n)
-			elif face == 4: return (0, 0, row)
-			elif face == 5: return (0, n, n-row)
+			if face == 0:   return (3, n, row)
+			elif face == 1: return (0, n, row)
+			elif face == 2: return (1, n, row)
+			elif face == 3: return (2, n, row)
+			elif face == 4: return (0, n-row, n)
+			elif face == 5: return (0, row, 0)
 		elif col >= d:
-			if face == 0:   return (1, row, 0)
-			elif face == 1: return (2, row, 0)
-			elif face == 2: return (3, row, 0)
-			elif face == 3: return (0, row, 0)
-			elif face == 4: return (2, 0, n-row)
-			elif face == 5: return (2, n, row)
+			if face == 0:   return (1, 0, row)
+			elif face == 1: return (2, 0, row)
+			elif face == 2: return (3, 0, row)
+			elif face == 3: return (0, 0, row)
+			elif face == 4: return (2, row, n)
+			elif face == 5: return (2, n-row, 0)
 		else:
 			return (face, col, row)
 	
@@ -126,17 +126,11 @@ class CubeGrid(Grid):
 		image.save(outputName+".png")
 		
 		#debug
-		import os
-		with open(outputName+".debug.tex", "w") as f:
-			f.write("\\documentclass{article}\n\\usepackage{graphicx}\n\\usepackage{multicol}\n\\usepackage[margin=.55in]{geometry}\n\\begin{document}\n")
-			f.write("\\noindent\\includegraphics[width=\\linewidth]{{{}}}\n\n\\begin{{multicols*}}{{3}}\n\n".format(outputName))
+		with open(outputName+".log", "w") as f:
+			f.write("Debug output\n\n")
 			for cell in self.eachCell():
-				f.write("Cell ({}, {}, {}):\\\\\n".format(cell.face, cell.col, cell.row))
-				f.write("\-\hspace{{2cm}}North: {}\\\\\n".format(cell.IsLinked(cell.north)))
-				f.write("\-\hspace{{2cm}}East: {}\\\\\n".format(cell.IsLinked(cell.east)))
-				f.write("\-\hspace{{2cm}}South: {}\\\\\n".format(cell.IsLinked(cell.south)))
-				f.write("\-\hspace{{2cm}}West: {}\n\n".format(cell.IsLinked(cell.west)))
-			f.write("\\end{multicols*}\n\\end{document}")
-		os.system("pdflatex -aux-directory=temp {}.debug.tex".format(outputName))
-		os.system("del {}.debug.tex".format(outputName))
-		os.system("rmdir /s /q temp")
+				f.write("Cell ({}, {}, {}):\n".format(cell.face, cell.col, cell.row))
+				f.write("\tNorth {} ({}, {}, {})\n".format(" | " if cell.IsLinked(cell.north) else "<=>", cell.north.face, cell.north.col, cell.north.row))
+				f.write("\tEast {} ({}, {}, {})\n".format(" | " if cell.IsLinked(cell.east) else "<=>", cell.east.face, cell.east.col, cell.east.row))
+				f.write("\tSouth {} ({}, {}, {})\n".format(" | " if cell.IsLinked(cell.south) else "<=>", cell.south.face, cell.south.col, cell.south.row))
+				f.write("\tWest {} ({}, {}, {})\n".format(" | " if cell.IsLinked(cell.west) else "<=>", cell.west.face, cell.west.col, cell.west.row))
