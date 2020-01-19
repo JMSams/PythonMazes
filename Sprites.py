@@ -1,3 +1,4 @@
+from cubeCell import CubeCell
 from PIL import Image
 import os
 
@@ -22,36 +23,55 @@ EW	= Image.open(os.path.join(dirname, 'Sprites/sprite_13.png'), 'r')
 W	= Image.open(os.path.join(dirname, 'Sprites/sprite_14.png'), 'r')
 D	= Image.open(os.path.join(dirname, 'Sprites/sprite_15.png'), 'r')
 
+CubeN	= Image.open(os.path.join(dirname, 'Sprites/sprite_16.png'), 'r')
+CubeE	= Image.open(os.path.join(dirname, 'Sprites/sprite_17.png'), 'r')
+CubeS	= Image.open(os.path.join(dirname, 'Sprites/sprite_18.png'), 'r')
+CubeW	= Image.open(os.path.join(dirname, 'Sprites/sprite_19.png'), 'r')
+
 def SelectSprite(cell):
+	rv = []
+	
 	if cell.IsLinked([cell.north, cell.east, cell.south, cell.west]):
-		return NESW
+		rv.append(NESW)
 	elif cell.IsLinked([cell.north, cell.east, cell.south]):
-		return NES
+		rv.append(NES)
 	elif cell.IsLinked([cell.north, cell.south, cell.west]):
-		return NSW
+		rv.append(NSW)
 	elif cell.IsLinked([cell.north, cell.east, cell.west]):
-		return NEW
+		rv.append(NEW)
 	elif cell.IsLinked([cell.south, cell.east, cell.west]):
-		return SEW
+		rv.append(SEW)
 	elif cell.IsLinked([cell.north, cell.east]):
-		return NE
+		rv.append(NE)
 	elif cell.IsLinked([cell.north, cell.west]):
-		return NW
+		rv.append(NW)
 	elif cell.IsLinked([cell.south, cell.east]):
-		return SE
+		rv.append(SE)
 	elif cell.IsLinked([cell.south, cell.west]):
-		return SW
+		rv.append(SW)
 	elif cell.IsLinked([cell.north, cell.south]):
-		return NS
+		rv.append(NS)
 	elif cell.IsLinked([cell.east, cell.west]):
-		return EW
+		rv.append(EW)
 	elif cell.IsLinked([cell.north]):
-		return N
+		rv.append(N)
 	elif cell.IsLinked([cell.east]):
-		return E
+		rv.append(E)
 	elif cell.IsLinked([cell.south]):
-		return S
+		rv.append(S)
 	elif cell.IsLinked([cell.west]):
-		return W
+		rv.append(W)
 	else:
-		return D
+		rv.append(D)
+	
+	if isinstance(cell, CubeCell):
+		if cell.row == 0:
+			rv.append(CubeS)
+		elif cell.row == cell.grid.cubeSize-1:
+			rv.append(CubeN)
+		if cell.col == 0:
+			rv.append(CubeW)
+		elif cell.col == cell.grid.cubeSize-1:
+			rv.append(CubeE)
+	
+	return tuple(rv)

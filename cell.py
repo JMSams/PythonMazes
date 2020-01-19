@@ -1,4 +1,5 @@
 class Cell:
+	grid = None
 	row = None
 	col = None
 	
@@ -9,7 +10,8 @@ class Cell:
 	
 	links = None
 	
-	def __init__(self, col, row):
+	def __init__(self, grid, col, row):
+		self.grid = grid
 		self.col = col
 		self.row = row
 		self.links = []

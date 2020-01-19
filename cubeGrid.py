@@ -32,7 +32,7 @@ class CubeGrid(Grid):
 			for col in range(self.colCount):
 				newCol = []
 				for row in range(self.rowCount):
-					newCol.append(CubeCell(face, col, row))
+					newCol.append(CubeCell(self, face, col, row))
 				newFace.append(newCol)
 			self.grid.append(newFace)
 	
@@ -121,7 +121,11 @@ class CubeGrid(Grid):
 					offset = (offset[0] + faceOffsets[face][0], offset[1] + faceOffsets[face][1])
 					
 					sprite = Sprites.SelectSprite(self[face, col, row])
-					image.paste(sprite, offset)
+					if isinstance(sprite, tuple):
+						for s in sprite:
+							image.paste(s, offset, mask=s)
+					else:
+						image.paste(sprite, offset)
 		
 		image.save(outputName+".png")
 		

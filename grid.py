@@ -34,7 +34,7 @@ class Grid:
 		for col in range(self.colCount):
 			newCol = []
 			for row in range(self.rowCount):
-				newCol.append(Cell(col, row))
+				newCol.append(Cell(self, col, row))
 			self.grid.append(newCol)
 	
 	def ConfigureGrid(self):
