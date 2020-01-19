@@ -81,6 +81,7 @@ def Animate(s, t=None):
 			sleep(0.1)
 
 if algorithm == 0:
+	#TODO: Pick randomly from algorithms that support the current grid type
 	algorithm = randint(1, ALGORITHM_COUNT)
 if algorithm == 1:
 	from BinaryTree import BinaryTree as Algorithm
