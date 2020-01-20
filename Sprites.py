@@ -28,6 +28,11 @@ CubeE	= Image.open(os.path.join(dirname, 'Sprites/sprite_17.png'), 'r')
 CubeS	= Image.open(os.path.join(dirname, 'Sprites/sprite_18.png'), 'r')
 CubeW	= Image.open(os.path.join(dirname, 'Sprites/sprite_19.png'), 'r')
 
+def GetCubeTabs(imageSize):
+	CubeTabs = Image.open(os.path.join(dirname, 'Sprites/cubetabs.png'), 'r')
+	#tabsize = (imageSize[0] * ‭1.3583, imageSize[1])
+	return CubeTabs.resize(imageSize)
+
 def SelectSprite(cell):
 	rv = []
 	

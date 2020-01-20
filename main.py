@@ -109,7 +109,6 @@ else:
 	printhelp()
 
 gridtime = datetime.now()
-#grid = Grid(colCount, rowCount)
 runt = True
 t = Thread(target=Animate, args=("Generating maze with "+Algorithm.name,))
 t.daemon = True
@@ -122,7 +121,7 @@ print("Maze generated in {0:.2f} seconds".format((datetime.now()-gridtime).total
 print()
 
 imagetime = datetime.now()
-t = Thread(target=grid.Draw, args=(outname,))
+t = Thread(target=grid.Draw, args=(outname,True))
 t.daemon = True
 t.start()
 Animate("Generating image", t)

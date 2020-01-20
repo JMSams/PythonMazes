@@ -97,7 +97,7 @@ class CubeGrid(Grid):
 		pass
 		#TODO: Somehow represent a cube maze as text?
 	
-	def Draw(self, outputName="output"):
+	def Draw(self, outputName="output", tabs=False):
 		from PIL import Image
 		import Sprites
 		
@@ -112,7 +112,14 @@ class CubeGrid(Grid):
 			(facesize, facesize*2)
 		]
 		
-		image = Image.new('RGBA', (facesize*4, facesize*3), (0, 0, 0, 0))
+		imageSize = (facesize*4, facesize*3)
+		if tabs:
+			imageSize = (int(imageSize[0] * 1.3583), imageSize[1])
+		
+		image = Image.new('RGBA', imageSize, (0, 0, 0, 0))
+		
+		if tabs:
+			image.paste(Sprites.GetCubeTabs(imageSize), (0,0))
 		
 		for face in range(6):
 			for row in range(self.cubeSize):
@@ -128,13 +135,3 @@ class CubeGrid(Grid):
 						image.paste(sprite, offset)
 		
 		image.save(outputName+".png")
-		
-		#debug
-		with open(outputName+".log", "w") as f:
-			f.write("Debug output\n\n")
-			for cell in self.eachCell():
-				f.write("Cell ({}, {}, {}):\n".format(cell.face, cell.col, cell.row))
-				f.write("\tNorth {} ({}, {}, {})\n".format(" | " if cell.IsLinked(cell.north) else "<=>", cell.north.face, cell.north.col, cell.north.row))
-				f.write("\tEast {} ({}, {}, {})\n".format(" | " if cell.IsLinked(cell.east) else "<=>", cell.east.face, cell.east.col, cell.east.row))
-				f.write("\tSouth {} ({}, {}, {})\n".format(" | " if cell.IsLinked(cell.south) else "<=>", cell.south.face, cell.south.col, cell.south.row))
-				f.write("\tWest {} ({}, {}, {})\n".format(" | " if cell.IsLinked(cell.west) else "<=>", cell.west.face, cell.west.col, cell.west.row))
