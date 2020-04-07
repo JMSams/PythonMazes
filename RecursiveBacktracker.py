@@ -7,7 +7,7 @@ class RecursiveBacktracker:
 	@staticmethod
 	def On(grid, startCell=None):
 		setrecursionlimit(8000)
-		RecursiveBacktracker.BacktrackRecursively(grid, [], grid.randomCell() if startCell == None else startCell)
+		RecursiveBacktracker.BacktrackRecursively(grid, [], grid.randomCell() if startCell == None else grid[startCell])
 	
 	@staticmethod
 	def BacktrackRecursively(grid, visited, cell):
