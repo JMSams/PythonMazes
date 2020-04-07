@@ -5,9 +5,9 @@ from sys import setrecursionlimit
 
 class RecursiveBacktracker:
 	@staticmethod
-	def On(grid):
+	def On(grid, startCell=None):
 		setrecursionlimit(8000)
-		RecursiveBacktracker.BacktrackRecursively(grid, [], grid.randomCell())
+		RecursiveBacktracker.BacktrackRecursively(grid, [], grid.randomCell() if startCell == None else startCell)
 	
 	@staticmethod
 	def BacktrackRecursively(grid, visited, cell):
