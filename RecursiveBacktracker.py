@@ -1,13 +1,9 @@
 from random import randint
 from grid import Grid
-from cubeGrid import CubeGrid
 from cell import Cell
 from sys import setrecursionlimit
 
 class RecursiveBacktracker:
-	name = "Recursive Backtracker"
-	supportedGrids = [1, 2]
-	
 	@staticmethod
 	def On(grid):
 		setrecursionlimit(8000)
